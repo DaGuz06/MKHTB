@@ -1,21 +1,3 @@
-## mkhtb: Herramienta de Configuración Rápida para HTB/CTF
-
-Este script de shell (`mkhtb`) automatiza la creación de la estructura de carpetas y archivos iniciales para empezar a atacar una máquina de **Hack The Box (HTB)**, CTF, o cualquier objetivo de pentesting.
-
-Facilita la organización, el registro y, lo más importante, ¡lanza inmediatamente un escaneo de Nmap básico!
-
-### Características
-
-* **Estructura de Carpetas:** Crea la estructura mínima necesaria (`recon/nmap`, `recon/http`, etc.).
-* **Archivos de Registro:** Genera `README.md` y `notes.md` con metadatos pre-rellenados (nombre de la máquina, IP, fecha de inicio).
-* **`.gitignore`:** Incluye un archivo `.gitignore` para no subir los resultados voluminosos de scans (`recon/nmap/*`, etc.) a tu repositorio.
-* **Automatización de Nmap:** Incluye un script ejecutable (`recon/enum.sh`) que, al crear la carpeta, **se ejecuta automáticamente** para lanzar un escaneo inicial de Nmap de todos los puertos.
-
-### Instalación
-
-Para instalar el script y hacerlo ejecutable desde cualquier lugar, simplemente copia y pega el siguiente bloque de comandos en tu terminal. Esto creará el archivo `/usr/local/bin/mkhtb` y le dará permisos de ejecución.
-
-```bash
 sudo tee /usr/local/bin/mkhtb > /dev/null <<'EOF'
 #!/usr/bin/env bash
 set -euo pipefail
@@ -144,36 +126,3 @@ fi
 EOF
 
 sudo chmod +x /usr/local/bin/mkhtb
-```
-
-# Uso
-
-Ejecuta mkhtb seguido del nombre que quieres para la carpeta y la IP de la máquina objetivo.
-
-Requisito: Debes tener nmap instalado para que la enumeración automática funcione.
-Bash
-
-mkhtb <nombre-carpeta> <ip-objetivo>
-
-Ejemplo:
-
-Bash
-
-mkhtb vault 10.10.14.5
-
-# Estructura de Directorios
-
-El script genera esta estructura inicial dentro del directorio que especifiques:
-
-<nombre-carpeta>/
-├── README.md           # Información general de la máquina
-├── .gitignore          # Ignora resultados de scans (.nmap, .xml, .gnmap)
-├── notes.md            # Archivo de notas detalladas
-└── recon/
-    ├── enum.sh         # Script ejecutable de Nmap (se lanza automáticamente)
-    ├── http/
-    │   ├── ffuf.txt    # Plantilla para resultados de FFUF
-    │   └── gobuster.txt # Plantilla para resultados de GoBuster
-    └── nmap/
-        ├── full_tcp.nmap   # Plantilla para salida -oA de Nmap (resultados guardados aquí)
-        └── scripts.nmap    # Plantilla para salida de escaneo con scripts NSE
